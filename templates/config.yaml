@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-db-initdb
+  namespace: {{ .Release.Namespace }}
+data:
+  init.sh: |
+    mysql_tzinfo_to_sql /usr/share/zoneinfo

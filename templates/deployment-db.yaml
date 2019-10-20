@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-db
+  namespace: {{ .Release.Namespace }}
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-db
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-db
+    spec:
+      containers:
+        - name: db
+          image: mariadb
+          env:
+            - name: TZ
+              value: Asia/Tokyo
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-db-auth
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: db-initdb
+              mountPath: /docker-entrypoint-initdb.d
+            - name: storage
+              mountPath: /var/lib/mysql
+              subPath: {{ .Release.Name }}-db
+          resources:
+            {{- toYaml .Values.resourcesDB | nindent 12 }}
+      volumes:
+        - name: db-initdb
+          configMap:
+            name: {{ .Release.Name }}-db-initdb
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-storage-claim
+      nodeSelector:
+        type: worker

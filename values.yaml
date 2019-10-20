@@ -1,0 +1,74 @@
+# hostname is the application host name.
+hostname: "localhost"
+
+# baseURL is the accessible URL to RushHour appliaction. It's used for specifing OAuth callback url.
+baseURL: "https://localhost"
+
+# endpointGluster is the array of the storage service's endpoints to store user data.
+endpointGluster: []
+
+# volumePath is the name of volume of the storage service to store user data.
+volumePath: ""
+
+# volumeCapacity is the limitation of the storage size.
+volumeCapacity: 27Gi
+
+# secretDocker is the authorization key for this application (because it's in private repository).
+secretDocker: ""
+
+# secretApp is the list of environmental information for the application.
+secretApp:
+  APP_SECRET: ""
+  DB_USER: "cnVzaGhvdXI="
+  DB_PASSWORD: "cnVzaGhvdXI="
+  DB_PORT: "3306"
+  DB_DATABASE: "cnVzaGhvdXI="
+  DB_ARGS: "?"
+  DB_HOST: "localhost"
+  admin_username: ""
+  admin_password: ""
+  salt: ""
+  state: ""
+  key: "______KEY_______"
+  google_client: ""
+  google_secret: ""
+  twitter_token: ""
+  twitter_secret: ""
+  github_client: ""
+  github_secret: ""
+
+# secretDB is the list of environmental information for the database.
+secretDB:
+  MYSQL_ROOT_PASSWORD: "cnVzaGhvdXI="
+  MYSQL_DATABASE: "cnVzaGhvdXI="
+  MYSQL_USER: "cnVzaGhvdXI="
+  MYSQL_PASSWORD: "cnVzaGhvdXI="
+
+# tlsCert is the certificate key for the web application.
+tlsCert: |
+  -----BEGIN CERTIFICATE-----
+  -----END CERTIFICATE-----
+
+# tlsKey is the private key for the web application.
+tlsKey: |
+  -----BEGIN PRIVATE KEY-----
+  -----END PRIVATE KEY-----
+
+
+# resourcesDB is the limitation of resource for the database.
+resourcesDB:
+  requests:
+    cpu: 100m
+    memory: 100M
+  limits:
+    cpu: 1000m
+    memory: 2048M
+
+# resourcesApp is the limitation of resource for application.
+resourcesApp:
+  requests:
+    cpu: 100m
+    memory: 100M
+  limits:
+    cpu: 5000m
+    memory: 3996M

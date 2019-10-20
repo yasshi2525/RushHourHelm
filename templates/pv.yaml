@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-storage-volume
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: {{ .Values.volumeCapacity | quote }}
+  glusterfs:
+    endpoints: {{ .Release.Name }}-storage
+    path: {{ .Values.volumePath }}
+    readOnly: false

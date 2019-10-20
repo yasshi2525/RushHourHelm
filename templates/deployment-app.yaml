@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  namespace: {{ .Release.Namespace }}
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+    spec:
+      containers:
+        - name: app
+          image: yasshi2525/rushhour
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: Asia/Tokyo
+            - name: baseurl
+              value: {{ .Values.baseURL | quote }}
+            - name: DB_HOST
+              value: {{ .Release.Name }}-db
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-app-secret
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: storage
+              mountPath: /rushhour/src/github.com/yasshi2525/RushHour/config
+              subPath: {{ .Release.Name }}-app/config
+            - name: storage
+              mountPath: /rushhour/src/github.com/yasshi2525/RushHour/log
+              subPath: {{ .Release.Name }}-app/log
+          resources:
+            {{- toYaml .Values.resourcesApp | nindent 12 }}
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-regcred
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-storage-claim
+      nodeSelector:
+        type: worker
