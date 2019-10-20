@@ -3,5 +3,5 @@ appVersion: "1.0"
 description: | 
   "Train commuting simulation game: \"RushHour\""
   "This chart deploy the application with database and expose URL endpoint."
-name: rushhour
+name: rushhour-helm
 version: 0.1.0
