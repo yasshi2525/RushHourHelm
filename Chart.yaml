@@ -4,4 +4,4 @@ description: |
   "Train commuting simulation game: \"RushHour\""
   "This chart deploy the application with database and expose URL endpoint."
 name: rushhour-helm
-version: 0.1.1
+version: 0.1.2

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-doc
+  namespace: {{ .Release.Namespace }}
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-doc
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-doc
+    spec:
+      containers:
+        - name: swagger
+          image: yasshi2525/rushhourswagger
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: BASE_URL
+              value: /doc/api

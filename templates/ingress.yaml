@@ -8,6 +8,10 @@ spec:
     - host: {{ .Values.hostname }}
       http:
         paths:
+          - path: /doc/api
+            backend:
+              serviceName: {{ .Release.Name }}-doc
+              servicePort: 8080
           - path: /
             backend:
               serviceName: {{ .Release.Name }}-app
