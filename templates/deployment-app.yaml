@@ -36,9 +36,6 @@ spec:
             - containerPort: 9000
           volumeMounts:
             - name: storage
-              mountPath: /rushhour/src/github.com/yasshi2525/RushHour/config
-              subPath: {{ .Release.Name }}-app/config
-            - name: storage
               mountPath: /rushhour/src/github.com/yasshi2525/RushHour/log
               subPath: {{ .Release.Name }}-app/log
           resources:
