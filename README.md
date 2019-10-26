@@ -1,1 +1,1 @@
-# RushHourHelm
+# RushHour helm chart
