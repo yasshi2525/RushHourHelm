@@ -26,17 +26,24 @@ questions:
     -----END PRIVATE KEY-----
   group: SSL settings
 
-- variable: secretDocker
-  label: Docker Repository Authentication
-  description: contents of `~/.docker/config.json`
-  type: multiline
+- variable: docker.registry
+  label: Docker Registry Name
+  description: Host name of private docker registry
+  type: hostname
   required: true
   group: Docker settings
 
-- variable: docRegistry
-  label: Docker Repository Name
-  description: Host name of private docker registry
-  type: hostname
+- variable: docker.username
+  label: User Name
+  description: User name to login private docker registry
+  type: string
+  required: true
+  group: Docker settings
+
+- variable: docker.password
+  label: Password
+  description: Password to login private docker registry
+  type: password
   required: true
   group: Docker settings
 

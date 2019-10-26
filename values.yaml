@@ -1,5 +1,5 @@
 # hostname is the application host name.
-hostname: "localhost"
+hostname: localhost
 
 # storageClassName is the name of storage class to claim storing user data.
 storageClassName: ""
@@ -10,7 +10,10 @@ volumeCapacity: 4G
 # secretDocker is the authorization key for this application (because it's in private repository).
 secretDocker: ""
 
-docRegistry: "localhost:5000"
+docker:
+  registry: localhost
+  username: admin
+  password: admin
 
 # secret is the list of environmental information for the application.
 secret:
