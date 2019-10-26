@@ -3,4 +3,4 @@ appVersion: "1.0"
 description: Train commuting simulation game "RushHour".
 name: rushhour
 version: 0.1.0
-icon: "./icon.png"
+icon: "file://./icon.png"
