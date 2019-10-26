@@ -4,6 +4,7 @@ questions:
   description: Host name of the application endpoint
   type: hostname
   required: true
+  group: RushHour settings
 
 - variable: tlsCert
   label: SSL Certificate
