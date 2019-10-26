@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: swagger
-          image: {{ .Values.docRegistry }}/rushhourswagger
+          image: {{ .Values.docker.registry }}/rushhourswagger
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -28,7 +28,7 @@ spec:
             - name: BASE_URL
               value: /doc/api
         - name: spec
-          image: {{ .Values.docRegistry }}/rushhourspec
+          image: {{ .Values.docker.registry }}/rushhourspec
           imagePullPolicy: Always
           ports:
             - containerPort: 80

@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: {{ .Values.docRegistry }}/rushhour
+          image: {{ .Values.docker.registry }}/rushhour
           imagePullPolicy: Always
           env:
             - name: TZ
