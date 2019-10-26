@@ -8,5 +8,7 @@ spec:
   selector:
     app: {{ .Release.Name }}-doc
   ports:
-    - name: {{ .Release.Name }}-doc
+    - name: {{ .Release.Name }}-swagger
       port: 8080
+    - name: {{ .Release.Name }}-spec
+      port: 80

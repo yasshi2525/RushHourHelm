@@ -1,0 +1,201 @@
+questions:
+- variable: hostname
+  label: Application Host Name
+  description: Host name of the application endpoint
+  type: hostname
+  required: true
+  default: xip.io
+  group: Host name settings
+
+- variable: storageClassName
+  label: Storage Class Name
+  description: Class name for user data stored storage
+  type: storageclass
+  required: true
+  group: Storage settings
+
+- variable: volumeCapacity
+  label: Storage Capacity
+  description: Disk size for user data stored storage
+  type: string
+  default: 4G
+  group: Storage settings
+
+- variable: secretDocker
+  label: Docker Repository Authentication
+  description: contents of `~/.docker/config.json`
+  type: multiline
+  required: true
+  group: Docker settings
+
+- variable: docRegistry
+  label: Docker Repository Name
+  description: Host name of private docker registry
+  type: hostname
+  required: true
+  group: Docker settings
+
+- variable: secret.APP_SECRET
+  label: Revel Secret Value
+  description: A secret string which is passed to cryptographically sign the cookie to prevent (and detect) user modification
+  type: string
+  default: ""
+  group: Security settings
+
+- variable: secret.DB_USER
+  label: Database User
+  description: User name to access internal database
+  type: string
+  default: rushhour
+  group: Database settings
+
+- variable: secret.DB_PASSWORD
+  label: Database Password
+  description: Password to access internal database
+  type: password
+  default: rushhour
+  group: Database settings
+
+- variable: secret.DB_PORT
+  label: Database Port Number
+  description: Port number to access internal database
+  type: int
+  min: 1
+  max: 65535
+  default: 3306
+  group: Database settings
+
+- variable: secret.DB_DATABASE
+  label: Database Name
+  description: Database name of creating tables
+  type: string
+  default: rushhour
+  group: Database settings
+
+- variable: secret.DB_ARGS
+  label: Database Additional Query
+  description: Application's additional query to connect database (should start with '?')
+  type: string
+  default: "?parseTime=true"
+  group: Application settings
+
+- variable: secret.admin_username
+  label: Administrator Name
+  description: Name of Initial login user
+  type: string
+  default: admin
+  group: Application settings
+
+- variable: secret.admin_password
+  label: Administrator Password
+  description: Password of initial login user
+  type: password
+  default: admin
+  group: Application settings
+
+- variable: secret.salt
+  label: Key of HMAC-SHA256
+  description: Key for hash
+  type: string
+  default: ""
+  group: Security settings
+
+- variable: secret.key
+  label: Key of AES
+  description: Key for encrypting sensitive data (MUST 16-character string)
+  type: string
+  default: "_16byte_len_str_"
+  min_length: 16
+  max_length: 16
+  group: Security settings
+
+- variable: secret.state
+  label: State of OAuth
+  description: State value to pass OAuth
+  type: string
+  default: ""
+  group: Security settings
+
+- variable: secret.google_client
+  label: Google Client ID
+  description: OAuth client id of Google Apps
+  type: string
+  default: ""
+  group: OAuth settings
+
+- variable: secret.google_secret
+  label: Google Client Secret
+  description: OAuth client secret of Google Apps
+  type: string
+  default: ""
+  group: OAuth settings
+
+- variable: secret.twitter_token
+  label: Twitter Token
+  description: OAuth token of Twitter Apps
+  type: string
+  default: ""
+  group: OAuth settings
+
+- variable: secret.twitter_secret
+  label: Twitter Token Secret
+  description: OAuth token secret of Twitter Apps
+  type: string
+  default: ""
+  group: OAuth settings
+
+- variable: secret.github_client
+  label: GitHub Client ID
+  description: OAuth client id of GitHub Apps
+  type: string
+  default: ""
+  group: OAuth settings
+
+- variable: secret.github_secret
+  label: GitHub Client Secret
+  description: OAuth client secret of GitHub Apps
+  type: string
+  default: ""
+  group: OAuth settings
+
+- variable: tlsCert
+  label: SSL Certificate
+  description: Application endpoint for HTTPS
+  type: multiline
+  default: |
+    -----BEGIN CERTIFICATE-----
+    -----END CERTIFICATE-----
+  group: SSL settings
+
+- variable: tlsKey
+  label: SSL Private Key
+  description: Application endpoint for HTTPS
+  type: multiline
+  default: |
+    -----BEGIN PRIVATE KEY-----
+    -----END PRIVATE KEY-----
+  group: SSL settings
+
+- variable: resourcesDB.limits.cpu
+  label: Max CPU of Database
+  type: string
+  default: 1000m
+  group: Performance settings
+
+- variable: resourcesDB.limits.memory
+  label: Max Memory of Database
+  type: string
+  default: 2048M
+  group: Performance settings
+
+- variable: resourcesApp.limits.cpu
+  label: Max CPU of Application
+  type: string
+  default: 5000m
+  group: Performance settings
+
+- variable: resourcesApp.limits.memory
+  label: Max Memory of Application
+  type: string
+  default: 4096M
+  group: Performance settings

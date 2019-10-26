@@ -20,10 +20,24 @@ spec:
     spec:
       containers:
         - name: swagger
-          image: yasshi2525/rushhourswagger
+          image: {{ .Values.docRegistry }}/rushhourswagger
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
             - name: BASE_URL
               value: /doc/api
+        - name: spec
+          image: {{ .Values.docRegistry }}/rushhourspec
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: doc-spec
+              mountPath: /etc/nginx/conf.d
+      imagePullSecrets:
+        - name: {{ .Release.Name }}-regcred
+      volumes:
+        - name: doc-spec
+          configMap:
+            name: {{ .Release.Name }}-doc-spec

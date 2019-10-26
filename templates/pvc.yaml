@@ -8,4 +8,5 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.volumeCapacity | quote }}
+      storage: {{ .Values.volumeCapacity }}
+  storageClassName: {{ .Values.storageClassName }}

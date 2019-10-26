@@ -1,48 +1,36 @@
 # hostname is the application host name.
 hostname: "localhost"
 
-# baseURL is the accessible URL to RushHour appliaction. It's used for specifing OAuth callback url.
-baseURL: "https://localhost"
-
-# endpointGluster is the array of the storage service's endpoints to store user data.
-endpointGluster: []
-
-# volumePath is the name of volume of the storage service to store user data.
-volumePath: ""
+# storageClassName is the name of storage class to claim storing user data.
+storageClassName: ""
 
 # volumeCapacity is the limitation of the storage size.
-volumeCapacity: 27Gi
+volumeCapacity: 4G
 
 # secretDocker is the authorization key for this application (because it's in private repository).
 secretDocker: ""
 
-# secretApp is the list of environmental information for the application.
-secretApp:
+docRegistry: "localhost:5000"
+
+# secret is the list of environmental information for the application.
+secret:
   APP_SECRET: ""
-  DB_USER: "cnVzaGhvdXI="
-  DB_PASSWORD: "cnVzaGhvdXI="
-  DB_PORT: "3306"
-  DB_DATABASE: "cnVzaGhvdXI="
-  DB_ARGS: "?"
-  DB_HOST: "localhost"
-  admin_username: ""
-  admin_password: ""
+  DB_USER: rushhour
+  DB_PASSWORD: rushhour
+  DB_PORT: 3306
+  DB_DATABASE: rushhour
+  DB_ARGS: "?parseTime=true"
+  admin_username: admin
+  admin_password: admin
   salt: ""
   state: ""
-  key: "______KEY_______"
+  key: _16byte_len_str_
   google_client: ""
   google_secret: ""
   twitter_token: ""
   twitter_secret: ""
   github_client: ""
   github_secret: ""
-
-# secretDB is the list of environmental information for the database.
-secretDB:
-  MYSQL_ROOT_PASSWORD: "cnVzaGhvdXI="
-  MYSQL_DATABASE: "cnVzaGhvdXI="
-  MYSQL_USER: "cnVzaGhvdXI="
-  MYSQL_PASSWORD: "cnVzaGhvdXI="
 
 # tlsCert is the certificate key for the web application.
 tlsCert: |
@@ -71,4 +59,4 @@ resourcesApp:
     memory: 100M
   limits:
     cpu: 5000m
-    memory: 3996M
+    memory: 4096M

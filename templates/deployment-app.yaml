@@ -20,13 +20,13 @@ spec:
     spec:
       containers:
         - name: app
-          image: yasshi2525/rushhour
+          image: {{ .Values.docRegistry }}/rushhour
           imagePullPolicy: Always
           env:
             - name: TZ
               value: Asia/Tokyo
             - name: baseurl
-              value: {{ .Values.baseURL | quote }}
+              value: https://{{ .Values.hostname }}
             - name: DB_HOST
               value: {{ .Release.Name }}-db
           envFrom:

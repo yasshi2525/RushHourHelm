@@ -1,1 +1,3 @@
-Access {{ .Values.baseURL }}
+1. Prepare storage class.
+2. Release this chart.
+2. Access to https://{{ .Values.hostname }} .
