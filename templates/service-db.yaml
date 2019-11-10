@@ -1,3 +1,4 @@
+{{- if .Values.secret.db_enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -10,3 +11,4 @@ spec:
   ports:
     - name: {{ .Release.Name }}-db
       port: 3306
+{{- end -}}

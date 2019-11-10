@@ -1,3 +1,4 @@
+{{- if .Values.secret.db_enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -46,3 +47,4 @@ spec:
             claimName: {{ .Release.Name }}-storage-claim
       nodeSelector:
         type: worker
+{{- end -}}

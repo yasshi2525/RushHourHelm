@@ -61,41 +61,36 @@ questions:
   default: admin
   group: Application settings
 
-- variable: secret.DB_ARGS
-  label: Database Additional Query
-  description: Application's additional query to connect database (should start with '?')
-  type: string
-  default: "?parseTime=true"
-  group: Application settings
-
-- variable: secret.DB_USER
-  label: Database User
-  description: User name to access internal database
-  type: string
-  default: rushhour
-  group: Database settings
-
-- variable: secret.DB_PASSWORD
-  label: Database Password
-  description: Password to access internal database
-  type: password
-  default: rushhour
-  group: Database settings
-
-- variable: secret.DB_DATABASE
-  label: Database Name
-  description: Database name of creating tables
-  type: string
-  default: rushhour
-  group: Database settings
-
-- variable: secret.DB_PORT
-  label: Database Port Number
-  description: Port number to access internal database
-  type: int
-  min: 1
-  max: 65535
-  default: 3306
+- variable: secret.db_enabled
+  label: Database Enabled
+  description: Persist data in database
+  type: boolean
+  default: true
+  show_subquestion_if: true
+  subquestions:
+  - variable: secret.db_args
+    label: Database Additional Query
+    description: Application's additional query to connect database (should start with '?')
+    type: string
+    default: "?parseTime=true"
+  - variable: secret.db_user
+    label: Database User
+    description: User name to access internal database
+    type: string
+    default: rushhour
+    group: Database settings
+  - variable: secret.db_password
+    label: Database Password
+    description: Password to access internal database
+    type: password
+    default: rushhour
+    group: Database settings
+  - variable: secret.db_database
+    label: Database Name
+    description: Database name of creating tables
+    type: string
+    default: rushhour
+    group: Database settings
   group: Database settings
 
 - variable: secret.APP_SECRET

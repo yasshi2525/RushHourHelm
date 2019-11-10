@@ -1,3 +1,4 @@
+{{- if .Values.secret.db_enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -6,3 +7,4 @@ metadata:
 data:
   init.sh: |
     mysql_tzinfo_to_sql /usr/share/zoneinfo
+{{- end -}}

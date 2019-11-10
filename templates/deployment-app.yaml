@@ -27,19 +27,27 @@ spec:
               value: Asia/Tokyo
             - name: baseurl
               value: https://{{ .Values.hostname }}
-            - name: DB_HOST
-              value: {{ .Release.Name }}-db
+            - name: persist
+              value: {{ .Values.secret.db_enabled }}
+            {{- if .Values.secret.db_enabled }}
+            - name: db_spec
+              value: {{ .Values.secret.db_user }}\:{{ .Values.secret.db_password }}@tcp({{ .Release.Name }}-db:3306)/{{ .Values.secret.db_database }}{{ .Values.secret.db_args }}
+            {{- end }}
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}-app-secret
           ports:
-            - containerPort: 9000
+            - containerPort: 8080
           volumeMounts:
             - name: storage
-              mountPath: /rushhour/src/github.com/yasshi2525/RushHour/log
-              subPath: {{ .Release.Name }}-app/log
+              mountPath: /rushhour/logs
+              subPath: {{ .Release.Name }}-app/logs
           resources:
             {{- toYaml .Values.resourcesApp | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
       imagePullSecrets:
         - name: {{ .Release.Name }}-regcred
       volumes:
