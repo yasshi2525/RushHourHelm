@@ -23,7 +23,7 @@ secret:
   db_password: rushhour
   db_database: rushhour
   db_args: "?parseTime=true"
-  admin_username: admin
+  admin_username: admin@example.com
   admin_password: admin
   salt: ""
   state: ""

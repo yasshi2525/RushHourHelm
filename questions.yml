@@ -51,7 +51,7 @@ questions:
   label: Administrator Name
   description: Name of Initial login user
   type: string
-  default: admin
+  default: admin@example.com
   group: Application settings
 
 - variable: secret.admin_password
