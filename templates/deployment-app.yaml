@@ -28,10 +28,10 @@ spec:
             - name: baseurl
               value: https://{{ .Values.hostname }}
             - name: persist
-              value: {{ .Values.secret.db_enabled }}
+              value: {{ .Values.secret.db_enabled | quote }}
             {{- if .Values.secret.db_enabled }}
             - name: db_spec
-              value: {{ .Values.secret.db_user }}\:{{ .Values.secret.db_password }}@tcp({{ .Release.Name }}-db:3306)/{{ .Values.secret.db_database }}{{ .Values.secret.db_args }}
+              value: {{ .Values.secret.db_user }}:{{ .Values.secret.db_password }}@tcp({{ .Release.Name }}-db:3306)/{{ .Values.secret.db_database }}{{ .Values.secret.db_args }}
             {{- end }}
           envFrom:
             - secretRef:
@@ -54,5 +54,3 @@ spec:
         - name: storage
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-storage-claim
-      nodeSelector:
-        type: worker

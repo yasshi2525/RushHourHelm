@@ -45,6 +45,4 @@ spec:
         - name: storage
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-storage-claim
-      nodeSelector:
-        type: worker
 {{- end -}}
