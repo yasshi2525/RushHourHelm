@@ -17,6 +17,8 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}-app
+      annotations:
+        timestamp: {{ date "2006/01/02T15:04:05" .Release.Time | quote }}
     spec:
       containers:
         - name: app
