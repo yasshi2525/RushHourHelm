@@ -174,7 +174,7 @@ questions:
   show_if: db.type=Pod
   group: Database settings
 
-- variable: db.enternal.host
+- variable: db.external.host
   label: Host Name
   description: MariaDB/MySQL server host name
   type: hostname
@@ -182,7 +182,7 @@ questions:
   show_if: db.type=External
   group: Database settings
 
-- variable: db.enternal.port
+- variable: db.external.port
   label: Port Number
   description: MariaDB/MySQL server port number
   type: int
@@ -193,7 +193,7 @@ questions:
   show_if: db.type=External
   group: Database settings
 
-- variable: db.enternal.user
+- variable: db.external.user
   label: User Name
   description: User name to access MariaDB/MySQL server
   type: string
@@ -202,7 +202,7 @@ questions:
   show_if: db.type=External
   group: Database settings
 
-- variable: db.enternal.password
+- variable: db.external.password
   label: Password
   description: Password to access MariaDB/MySQL server 
   type: password
@@ -210,7 +210,7 @@ questions:
   show_if: db.type=External
   group: Database settings
 
-- variable: db.enternal.database
+- variable: db.external.database
   label: Database Name
   description: Database name of creating tables
   type: string
