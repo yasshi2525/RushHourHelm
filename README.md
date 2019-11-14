@@ -1,14 +1,10 @@
 # RushHour helm chart
-
 ## Pre Requirement
-
 * Docker Registryが `registry.host` に構築されている
 * (PersistentVolumeにデータを保存する場合) StorageClassが `pv.storageClassName` に定義されている
 * (既存DBにデータを保存する場合) MariaDB/MySQLサーバが `db.external.host` に構築されている
 * OAuth用のクライアントが作成されている (Twitter, Google, GitHub)
-
 ## 設定項目
-
 |変数名|説明|デフォルト値|必須|
 |-|-|-|-|
 |`app.admin_username`|管理者ユーザ名(メールアドレス形式)|`admin@example.com`|○|
