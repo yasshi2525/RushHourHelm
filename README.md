@@ -1,6 +1,6 @@
 # RushHour helm chart
 
-## 前提
+## Pre Requirement
 
 * Docker Registryが `registry.host` に構築されている
 * (PersistentVolumeにデータを保存する場合) StorageClassが `pv.storageClassName` に定義されている
