@@ -1,153 +1,244 @@
 questions:
 - variable: hostname
-  label: Application Host Name
-  description: Host name of the application endpoint
+  label: Host Name
+  description: Host name of application
   type: hostname
   required: true
   group: RushHour settings
 
-- variable: tlsCert
-  label: SSL Certificate
-  description: Application endpoint for HTTPS
-  type: multiline
-  required: true
-  default: |-
-    -----BEGIN CERTIFICATE-----
-    -----END CERTIFICATE-----
-  group: SSL settings
-
-- variable: tlsKey
-  label: SSL Private Key
-  description: Application endpoint for HTTPS
-  type: multiline
-  required: true
-  default: |-
-    -----BEGIN PRIVATE KEY-----
-    -----END PRIVATE KEY-----
-  group: SSL settings
-
-- variable: docker.registry
-  label: Docker Registry Name
-  description: Host name of private docker registry
-  type: hostname
-  required: true
-  group: Docker settings
-
-- variable: docker.username
-  label: User Name
-  description: User name to login private docker registry
-  type: string
-  required: true
-  group: Docker settings
-
-- variable: docker.password
-  label: Password
-  description: Password to login private docker registry
-  type: password
-  required: true
-  group: Docker settings
-
-- variable: secret.admin_username
+- variable: app.admin_username
   label: Administrator Name
   description: Name of Initial login user
   type: string
+  required: true
   default: admin@example.com
   group: Application settings
 
-- variable: secret.admin_password
+- variable: app.admin_password
   label: Administrator Password
   description: Password of initial login user
   type: password
-  default: admin
+  required: true
   group: Application settings
 
-- variable: secret.db_enabled
-  label: Database Enabled
-  description: Persist data in database
-  type: boolean
-  default: true
-  show_subquestion_if: true
-  subquestions:
-  - variable: secret.db_args
-    label: Database Additional Query
-    description: Application's additional query to connect database (should start with '?')
-    type: string
-    default: "?parseTime=true"
-  - variable: secret.db_user
-    label: Database User
-    description: User name to access internal database
-    type: string
-    default: rushhour
-    group: Database settings
-  - variable: secret.db_password
-    label: Database Password
-    description: Password to access internal database
-    type: password
-    default: rushhour
-    group: Database settings
-  - variable: secret.db_database
-    label: Database Name
-    description: Database name of creating tables
-    type: string
-    default: rushhour
-    group: Database settings
-  group: Database settings
-
-- variable: secret.APP_SECRET
+- variable: app.cookie
   label: Cookie Secret Value
   description: A secret string which is passed to cryptographically sign the cookie to prevent (and detect) user modification
   type: string
-  default: ""
+  required: true
   group: Security settings
 
-- variable: secret.salt
+- variable: app.salt
   label: Key of HMAC-SHA256
   description: Key for hash
   type: string
-  default: ""
+  required: true
   group: Security settings
 
-- variable: secret.key
-  label: Key of AES
+- variable: app.key
+  label: Key of CBC Mode
   description: Key for encrypting sensitive data (MUST 16-character string)
   type: string
   default: "_16byte_len_str_"
   min_length: 16
   max_length: 16
+  required: true
   group: Security settings
 
-- variable: secret.state
+- variable: app.state
   label: State of OAuth
   description: State value to pass OAuth
   type: string
-  default: ""
+  required: true
   group: Security settings
 
-- variable: storageClassName
-  label: Storage Class Name
-  description: Class name for user data stored storage
-  type: storageclass
+- variable: app.google_client
+  label: Google Client ID
+  description: OAuth client id of Google Apps
+  type: string
   required: true
+  group: OAuth settings
+
+- variable: app.google_secret
+  label: Google Client Secret
+  description: OAuth client secret of Google Apps
+  type: string
+  required: true
+  group: OAuth settings
+
+- variable: app.twitter_token
+  label: Twitter Token
+  description: OAuth token of Twitter Apps
+  type: string
+  required: true
+  group: OAuth settings
+
+- variable: app.twitter_secret
+  label: Twitter Token Secret
+  description: OAuth token secret of Twitter Apps
+  type: string
+  required: true
+  group: OAuth settings
+
+- variable: app.github_client
+  label: GitHub Client ID
+  description: OAuth client id of GitHub Apps
+  type: string
+  required: true
+  group: OAuth settings
+
+- variable: app.github_secret
+  label: GitHub Client Secret
+  description: OAuth client secret of GitHub Apps
+  type: string
+  required: true
+  group: OAuth settings
+
+- variable: tls.enabled
+  label: Enable HTTPS
+  description: Application endpoint uses SSL
+  type: boolean
+  defalut: false
+  show_subquestion_if: true
+  subquestions:
+  - variable: tls.cert
+    label: SSL Certificate
+    description: SSL Certificate by PEM format
+    type: multiline
+    required: true
+    default: |-
+      -----BEGIN CERTIFICATE-----
+      -----END CERTIFICATE-----
+  - variable: tls.key
+    label: SSL Private Key
+    description: SSL Private by PEM format
+    type: multiline
+    required: true
+    default: |-
+      -----BEGIN PRIVATE KEY-----
+      -----END PRIVATE KEY-----
+  group: SSL settings
+
+- variable: pv.enabled
+  label: Uses PersistentVolume
+  description: stores application log and database in PersitentVolume
+  type: boolean
+  default: false
+  show_subquestions_if: true
+  subquestions:
+  - variable: pv.storageClassName
+    label: Storage Class Name
+    description: Class name for user data stored storage
+    type: storageclass
+    required: true
+  - variable: pv.capacity
+    label: Storage Capacity
+    description: Disk size for user data stored storage
+    type: string
+    default: 10Gi
+    required: true
   group: Storage settings
 
-- variable: volumeCapacity
-  label: Storage Capacity
-  description: Disk size for user data stored storage
-  type: string
-  default: 4G
-  group: Storage settings
+- variable: db.type
+  label: Type of user data storage
+  type: enum
+  options:
+  - "None"
+  - "Pod"
+  - "External"
+  group: Database settings
 
-- variable: resourcesDB.limits.cpu
-  label: Max CPU of Database
+- variable: db.pod.user
+  label: User Name
+  description: User name to access internal database
   type: string
-  default: 1000m
-  group: Performance settings
+  default: rushhour
+  required: true
+  show_if: db.type=Pod
+  group: Database settings
 
-- variable: resourcesDB.limits.memory
-  label: Max Memory of Database
+- variable: db.pod.password
+  label: Password
+  description: Password to access internal database
+  type: password
+  required: true
+  show_if: db.type=Pod
+  group: Database settings
+
+- variable: db.pod.database
+  label: Database Name
+  description: Database name of creating tables
   type: string
-  default: 2048M
-  group: Performance settings
+  default: rushhour
+  required: true
+  show_if: db.type=Pod
+  group: Database settings
+
+- variable: db.enternal.host
+  label: Host Name
+  description: MariaDB/MySQL server host name
+  type: hostname
+  required: true
+  show_if: db.type=External
+  group: Database settings
+
+- variable: db.enternal.port
+  label: Port Number
+  description: MariaDB/MySQL server port number
+  type: int
+  default: 3306
+  min: 0
+  max: 65535
+  required: true
+  show_if: db.type=External
+  group: Database settings
+
+- variable: db.enternal.user
+  label: User Name
+  description: User name to access MariaDB/MySQL server
+  type: string
+  default: rushhour
+  required: true
+  show_if: db.type=External
+  group: Database settings
+
+- variable: db.enternal.password
+  label: Password
+  description: Password to access MariaDB/MySQL server 
+  type: password
+  required: true
+  show_if: db.type=External
+  group: Database settings
+
+- variable: db.enternal.database
+  label: Database Name
+  description: Database name of creating tables
+  type: string
+  default: rushhour
+  required: true
+  show_if: db.type=External
+  group: Database settings
+
+- variable: registry.host
+  label: Host name
+  description: Host name of private docker registry
+  type: hostname
+  required: true
+  group: Registry settings
+
+- variable: registry.user
+  label: User Name
+  description: User name to login private docker registry
+  type: string
+  required: true
+  group: Registry settings
+
+- variable: registry.password
+  label: Password
+  description: Password to login private docker registry
+  type: password
+  required: true
+  group: Registry settings
 
 - variable: resourcesApp.limits.cpu
   label: Max CPU of Application
@@ -161,44 +252,16 @@ questions:
   default: 4096M
   group: Performance settings
 
-- variable: secret.google_client
-  label: Google Client ID
-  description: OAuth client id of Google Apps
+- variable: resourcesDB.limits.cpu
+  label: Max CPU of Database
   type: string
-  default: ""
-  group: OAuth settings
+  default: 1000m
+  show_if: db.type=Pod
+  group: Performance settings
 
-- variable: secret.google_secret
-  label: Google Client Secret
-  description: OAuth client secret of Google Apps
+- variable: resourcesDB.limits.memory
+  label: Max Memory of Database
   type: string
-  default: ""
-  group: OAuth settings
-
-- variable: secret.twitter_token
-  label: Twitter Token
-  description: OAuth token of Twitter Apps
-  type: string
-  default: ""
-  group: OAuth settings
-
-- variable: secret.twitter_secret
-  label: Twitter Token Secret
-  description: OAuth token secret of Twitter Apps
-  type: string
-  default: ""
-  group: OAuth settings
-
-- variable: secret.github_client
-  label: GitHub Client ID
-  description: OAuth client id of GitHub Apps
-  type: string
-  default: ""
-  group: OAuth settings
-
-- variable: secret.github_secret
-  label: GitHub Client Secret
-  description: OAuth client secret of GitHub Apps
-  type: string
-  default: ""
-  group: OAuth settings
+  default: 2048M
+  show_if: db.type=Pod
+  group: Performance settings

@@ -1,28 +1,28 @@
-# hostname is the application host name.
 hostname: localhost
 
-# storageClassName is the name of storage class to claim storing user data.
-storageClassName: ""
-
-# volumeCapacity is the limitation of the storage size.
-volumeCapacity: 4G
-
-# secretDocker is the authorization key for this application (because it's in private repository).
-secretDocker: ""
-
-docker:
-  registry: localhost
-  username: admin
+registry:
+  host: localhost
+  user: admin
   password: admin
 
-# secret is the list of environmental information for the application.
-secret:
+db:
+  type: None
+  # required if db.type is Pod
+  pod:
+    user: rushhour
+    password: rushhour
+    database: rushhour
+  # required if db.type is External
+  external:
+    host: localhost
+    port: 3306
+    user: rushhour
+    password: rushhour
+    database: rushhour
+
+app:
+  baseurl: "http://localhost"
   cookie: ""
-  db_enabled: true
-  db_user: rushhour
-  db_password: rushhour
-  db_database: rushhour
-  db_args: "?parseTime=true"
   admin_username: admin@example.com
   admin_password: admin
   salt: ""
@@ -35,16 +35,21 @@ secret:
   github_client: ""
   github_secret: ""
 
-# tlsCert is the certificate key for the web application.
-tlsCert: |
-  -----BEGIN CERTIFICATE-----
-  -----END CERTIFICATE-----
+tls: 
+  enabled: false
+  # required if tls.enabled is true
+  cert: |-  
+    -----BEGIN CERTIFICATE-----
+    -----END CERTIFICATE-----
+  key: |-
+    -----BEGIN PRIVATE KEY-----
+    -----END PRIVATE KEY-----
 
-# tlsKey is the private key for the web application.
-tlsKey: |
-  -----BEGIN PRIVATE KEY-----
-  -----END PRIVATE KEY-----
-
+pv:
+  enabled: false
+  # required if pv.enabled is true
+  storageClassName: ""
+  capacity: "10Gi"
 
 # resourcesDB is the limitation of resource for the database.
 resourcesDB:

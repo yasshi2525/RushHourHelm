@@ -1,3 +1,4 @@
+{{- if .Values.pv.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -8,5 +9,6 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.volumeCapacity }}
-  storageClassName: {{ .Values.storageClassName }}
+      storage: {{ .Values.pv.capacity | quote }}
+  storageClassName: {{ .Values.pv.storageClassName | quote }}
+{{- end -}}

@@ -1,4 +1,4 @@
-{{- if .Values.secret.db_enabled }}
+{{- if eq .Values.db.type "Pod" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

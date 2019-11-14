@@ -20,7 +20,9 @@ spec:
             backend:
               serviceName: {{ .Release.Name }}-app
               servicePort: 8080
+  {{- if .Values.tls.enabled }}
   tls:
     - hosts:
         - {{ .Values.hostname }}
       secretName: {{ .Release.Name }}-tls
+  {{- end -}}

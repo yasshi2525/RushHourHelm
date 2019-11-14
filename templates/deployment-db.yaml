@@ -1,4 +1,4 @@
-{{- if .Values.secret.db_enabled }}
+{{- if eq .Values.db.type "Pod" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,12 +37,16 @@ spec:
               mountPath: /var/lib/mysql
               subPath: {{ .Release.Name }}-db
           resources:
-            {{- toYaml .Values.resourcesDB | nindent 12 }}
+            {{- toYaml .Values.resourcesDB | nindent 12 -}}
       volumes:
         - name: db-initdb
           configMap:
             name: {{ .Release.Name }}-db-initdb
         - name: storage
+        {{- if .Values.pv.enabled }}
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-storage-claim
+        {{- else }}
+          emptyDir: {}
+        {{- end -}}
 {{- end -}}

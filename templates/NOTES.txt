@@ -1,3 +1,4 @@
-1. Prepare storage class.
+1. Prepare storage class if needed.
 2. Release this chart.
-2. Access to https://{{ .Values.hostname }} .
+3. Access to http(s)://`hostname` .
+4. Login as `app.admin_username` ( password = `app.admin_password` )

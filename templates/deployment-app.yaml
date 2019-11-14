@@ -22,18 +22,20 @@ spec:
     spec:
       containers:
         - name: app
-          image: {{ .Values.docker.registry }}/rushhour
+          image: {{ .Values.registry.host }}/rushhour
           imagePullPolicy: Always
           env:
             - name: TZ
               value: Asia/Tokyo
-            - name: baseurl
-              value: https://{{ .Values.hostname }}
             - name: persist
-              value: {{ .Values.secret.db_enabled | quote }}
-            {{- if .Values.secret.db_enabled }}
+              value: {{ ne .Values.db.type "None" | quote }}
+            {{- if eq .Values.db.type "Pod" }}
             - name: db_spec
-              value: {{ .Values.secret.db_user }}:{{ .Values.secret.db_password }}@tcp({{ .Release.Name }}-db:3306)/{{ .Values.secret.db_database }}{{ .Values.secret.db_args }}
+              {{- $_ := set .Values.db.pod "host" (printf "%s-db" .Release.Name) }}
+              value: {{ template "dbSpec" .Values.db.pod }}
+            {{- else if eq .Values.db.type "External" }}
+            - name: db_spec
+              value: {{ template "dbSpec" .Values.db.external }}
             {{- end }}
           envFrom:
             - secretRef:
@@ -45,7 +47,7 @@ spec:
               mountPath: /rushhour/logs
               subPath: {{ .Release.Name }}-app/logs
           resources:
-            {{- toYaml .Values.resourcesApp | nindent 12 }}
+            {{- toYaml .Values.resourcesApp | nindent 12 -}}
           livenessProbe:
             httpGet:
               path: /healthz
@@ -58,5 +60,9 @@ spec:
         - name: {{ .Release.Name }}-regcred
       volumes:
         - name: storage
+        {{- if .Values.pv.enabled }}
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-storage-claim
+        {{- else }}
+          emptyDir: {}
+        {{- end -}}
