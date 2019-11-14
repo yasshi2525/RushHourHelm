@@ -124,7 +124,7 @@ questions:
   description: stores application log and database in PersitentVolume
   type: boolean
   default: false
-  show_subquestions_if: true
+  show_subquestion_if: true
   subquestions:
   - variable: pv.storageClassName
     label: Storage Class Name
