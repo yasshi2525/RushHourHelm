@@ -1,10 +1,18 @@
 questions:
 - variable: hostname
-  label: Host Name
+  label: Application Host Name
   description: Host name of application
   type: hostname
   required: true
   group: RushHour settings
+
+- variable: app.baseurl
+  label: Application URL
+  description: Application url
+  type: string
+  required: true
+  default: http://localhost
+  group: Application settings
 
 - variable: app.admin_username
   label: Administrator Name
