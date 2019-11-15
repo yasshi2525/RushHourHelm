@@ -56,6 +56,7 @@ spec:
             httpGet:
               path: /readiness
               port: 8080
+      terminationGracePeriod: 300
       imagePullSecrets:
         - name: {{ .Release.Name }}-regcred
       volumes:
